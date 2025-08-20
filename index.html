@@ -220,6 +220,11 @@
             z-index: 10;
         }
 
+        .planet.touch-highlight {
+            background-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 0 0 3px var(--accent-color);
+        }
+
         .Sun { background-color: #ffd700; }
         .Moon { background-color: #e0e0e0; }
         .Mars { background-color: #ff5252; }
@@ -525,6 +530,27 @@
             bottom: -10px;
         }
 
+        /* Mobile-specific styles */
+        .mobile-tap-indicator {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(100, 181, 246, 0.2);
+            z-index: 1;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s, transform 0.3s;
+        }
+        
+        .mobile-tap-indicator.active {
+            opacity: 1;
+            transform: translate(-50%, -50%) scale(1.5);
+        }
+
         @media (max-width: 768px) {
             .chart-container {
                 max-width: 100%;
@@ -534,12 +560,14 @@
             
             .chart-box {
                 min-height: 80px;
+                padding: 8px;
             }
             
             .planet {
-                padding: 3px 6px;
-                font-size: 0.9em;
-                min-width: 50px;
+                padding: 10px 12px;
+                font-size: 1em;
+                min-width: 60px;
+                margin: 5px;
             }
             
             .controls {
@@ -547,8 +575,30 @@
             }
             
             button {
-                padding: 7px 12px;
-                font-size: 0.9em;
+                padding: 10px 14px;
+                font-size: 0.95em;
+                margin: 6px;
+            }
+            
+            /* Increase touch target size for mobile */
+            .planet::after {
+                top: -15px;
+                left: -15px;
+                right: -15px;
+                bottom: -15px;
+            }
+            
+            #retrograde-panel {
+                width: 280px;
+                font-size: 1.1em;
+                padding: 20px;
+                left: 50% !important;
+                top: 50% !important;
+                transform: translate(-50%, -50%);
+            }
+            
+            #retrograde-panel label {
+                font-size: 1.1em;
             }
         }
 
@@ -560,13 +610,13 @@
             
             .chart-box {
                 min-height: 70px;
-                padding: 3px;
+                padding: 5px;
             }
             
             .planet {
-                padding: 2px 4px;
-                font-size: 0.85em;
-                min-width: 45px;
+                padding: 8px 10px;
+                font-size: 0.9em;
+                min-width: 55px;
             }
             
             .planet-symbol {
@@ -586,8 +636,8 @@
             }
             
             button {
-                padding: 6px 10px;
-                margin: 3px;
+                padding: 8px 12px;
+                margin: 4px;
                 font-size: 0.85em;
             }
             
@@ -737,6 +787,7 @@
         <label>
             <input type="checkbox" id="retrograde-checkbox"> <span id="retrograde-label">Retrograde</span>
         </label>
+        <button id="close-retrograde-panel" style="margin-top: 10px;"><i class="fas fa-times"></i> Close</button>
     </div>
 
     <script>
@@ -932,16 +983,16 @@
 
                 hideSigns: "రాశులను దాచండి",
                 showSigns: "రాశులను చూపించు",
-                hideNumbers: "నంబర్‌లను దాచండი",
+                hideNumbers: "నంబర్‌లను దాచండి",
                 showNumbers: "నంబర్‌లను చూపించు",
 
                 houseLordship: "ఇంటి ఆధిపత్యం",
                 placementAnalysis: "స్థాన విశ్లేషణ",
 
                 signs: {
-                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "మిథునం", Cancer: "కర్కాటకం", Leo: "సింహம்", Virgo: "కన్య",
-                    Libra: "తుల", Scorpio: "వృశ్చికం", Sagittarius: "ధనుస్సు", Capricorn: "మకరం",
-                    Aquarius: "కుంభ��", Pisces: "మీనం"
+                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "મిథునం", Cancer: "కర్కాటకం", Leo: "సింహం", Virgo: "కన్య",
+                    Libra: "తుల", Scorpio: "వృశ్చిక��", Sagittarius: "ధనుస్సు", Capricorn: "మకరం",
+                    Aquarius: "కుంభం", Pisces: "మీనం"
                 },
                 signShort: {
                     Aries: "మే", Taurus: "వృ", Gemini: "మి", Cancer: "క", Leo: "సిం", Virgo: "కన్య",
@@ -949,8 +1000,8 @@
                     Aquarius: "కుం", Pisces: "మీ"
                 },
                 planets: {
-                    Lagna: "లగ్న", Sun: "సూర్యుడు", Moon: "చంద్రుడు", Mars: "కుజుడు", Mercury: "బుధుడు",
-                    Jupiter: "గురుడు", Venus: "శుక్రుడ��", Saturn: "శని", Rahu: "రాహువు", Ketu: "కేతువు"
+                    Lagna: "లగ్న", Sun: "సూర్యుడు", Moon: "చంద్రుడు", Mars: "కుజుడու", Mercury: "బుధుడు",
+                    Jupiter: "గురుడు", Venus: "శుక్రుడు", Saturn: "శని", Rahu: "రాహువు", Ketu: "కేతువు"
                 },
                 houseNames: {
                     1: "1వ ఇల్లు (లగ్న)", 2: "2వ ఇల్లు", 3: "3వ ఇల్లు", 4: "4వ ఇల్లు", 5: "5వ ఇల్లు",
@@ -967,21 +1018,21 @@
                     7: "వివాహం, భాగస్వామ్యాలు, వ్యాపారం, జీవిత భాగస్వామి, ప్రజా ప్రతిష్ఠ, న్యాయపరమైన విషయాలు",
                     8: "దీర్ఘాయువు, పరిశోధన, రహస్యం, వారసత్వం, ఆకస్మిక సంఘటనలు, దీర్ఘకాలిక అనారోగ్యం",
                     9: "తండ్రి, గురువు, ధర్మం, అదృష్టం, సుదూర ప్రయాణాలు, ఉన్నత జ్ఞానం",
-                    10: "వృత్తి, హోదా, ప్రతిష్ఠ, ప్రజా జీవితం, విజయాలు, అధికారం",
+                    10: "వృత్తి, హోదా, ప్రతిష్ఠ, ప్రజా జ��వితం, విజయాలు, అధికారం",
                     11: "లాభాలు, స్నేహితులు, ఆశలు, కోరికలు, పెద్ద తోబుట్టువులు, సమాజం, ఆశయాలు",
                     12: "నష్టాలు, ఖర్చులు, మోక్షం, ఆధ్యాత్మికత, విదేశీ భూములు, ఆసుపత్రులు, ఏకాంతం"
                 },
                 signKeywords: {
-                    Aries: "ప్రారంభం, చర్య, శక్తი, స్వతంత్రత, డ్రైవ్",
+                    Aries: "ప్రారంభం, చర్య, శక్తి, స్వతంత్రత, డ్రైవ్",
                     Taurus: "స్థిరత్వం, సంచితం, ఇంద్రియ జ్ఞానం, పట్టుదల, సౌకర్యం",
-                    Gemini: "కమ్యూనికేషన్, మేధస్సు, బహుముఖ ప్రజ్ఞ, ఉత్సుకత, ద్వంద్వత్వం",
+                    Gemini: "కम్యూనికేషన్, మేధస్సు, బహుముఖ ప్రజ్ఞ, ఉత్సుకత, ద్వంద్వత్వం",
                     Cancer: "పోషణ, భావోద్వేగం, ఇల్లు, సున్నితత్వం, భద్రత",
                     Leo: "సృజనాత్మకత, నాయకత్వం, ఆత్మవిశ్వాసం, రాజత్వం, ఆత్మప్రకటన",
                     Virgo: "సేవ, విశ్లేషణ, ఆరోగ్యం, వివరాలపై శ్రద్ధ, ఆచరణాత్మకత",
-                    Libra: "సామరస్యం, సంబంధాలు, న్యాయం, సమతుల్యత, దౌత్యం",
+                    Libra: "సామరస్యం, సంబంధాలు, न्यायం, సమతుల్యత, దౌత్యం",
                     Scorpio: "పరివర్తన, గోప్యత, తీవ్రత, పునరుత్పత్తి, రహస్యం",
-                    Sagittarius: "తత్వశాస్త్రం, అన్వేషణ, ఆశావాదం, జ్ఞాన��, ఉన్నత జ్ఞానం",
-                    Capricorn: "క్రమశిక్షణ, ఆశయం, नిర్మాణం, బాధ్యత, కఠినమైన పని",
+                    Sagittarius: "తత్వశాస్త్రం, అన్వేషణ, ఆశావాదం, జ్ఞానం, ఉన్నత జ్ఞానం",
+                    Capricorn: "క్రమశిక్షణ, ఆశయం, నిర్మాణం, బాధ్యత, కఠినమైన పని",
                     Aquarius: "ఆవిష్కరణ, మానవత్వం, విముక్తి, సంఘం, వాస్తవికత",
                     Pisces: "ఊహ, ఆధ్యాత్మికత, కరుణ, సమర్పణ, కలలు"
                 },
@@ -999,7 +1050,7 @@
 
         let isChangingDegree = false;
         let degreeChangePlanet = null;
-        let initialMouseY = 0;
+        let initialTouchY = 0;
         let initialPlanetDegree = 0;
         const planetTooltip = document.getElementById('planet-tooltip');
         const signTooltip = document.getElementById('sign-tooltip');
@@ -1008,8 +1059,22 @@
         const panelPlanetName = retrogradePanel.querySelector('.panel-planet-name');
         let selectedPlanetForRetrograde = null;
         let currentLanguage = 'en';
+        let isTouchDevice = false;
+        let touchStartTime = 0;
+        let touchStartX = 0;
+        let touchStartY = 0;
+        let longPressTimer = null;
+        let isDragging = false;
+
+        // Detect touch device
+        function detectTouchDevice() {
+            return (('ontouchstart' in window) ||
+                (navigator.maxTouchPoints > 0) ||
+                (navigator.msMaxTouchPoints > 0));
+        }
 
         document.addEventListener('DOMContentLoaded', () => {
+            isTouchDevice = detectTouchDevice();
             initialPlanetBankHTML = document.getElementById('planet-bank').innerHTML;
             attachDelegatedListeners();
             updateHouseNumbers();
@@ -1024,6 +1089,9 @@
 
             // Add event listener for copy button
             document.getElementById('copy-prompt-btn').addEventListener('click', copyPromptToClipboard);
+            
+            // Add event listener for retrograde panel close button
+            document.getElementById('close-retrograde-panel').addEventListener('click', hideRetrogradePanel);
         });
 
         function attachDelegatedListeners() {
@@ -1059,6 +1127,7 @@
                 label.addEventListener('mouseover', showSignTooltip);
                 label.addEventListener('mouseout', hideSignTooltip);
                 label.addEventListener('touchstart', handleTouchStart, { passive: false });
+                label.addEventListener('touchend', handleSignLabelTouch);
             });
 
             const planetBank = document.getElementById('planet-bank');
@@ -1236,7 +1305,7 @@
                 e.preventDefault();
                 isChangingDegree = true;
                 degreeChangePlanet = planetElement;
-                initialMouseY = e.clientY;
+                initialTouchY = e.clientY;
                 initialPlanetDegree = planetDegrees[planetElement.id]?.degree || 0;
 
                 document.addEventListener('mousemove', handleDegreeChangeMouseMove);
@@ -1245,40 +1314,70 @@
         }
 
         function handleTouchStart(e) {
-            const planetElement = e.target.closest('.planet');
-            if (!planetElement) return;
-
-            // Prevent page scrolling when touching a planet
-            if (planetElement) {
+            const touch = e.touches[0];
+            const targetElement = e.target;
+            const planetElement = targetElement.closest('.planet');
+            
+            // Store initial touch position and time
+            touchStartX = touch.clientX;
+            touchStartY = touch.clientY;
+            touchStartTime = Date.now();
+            
+            // Prevent default to avoid scrolling and other browser behaviors
+            if (planetElement || targetElement.closest('.sign-label')) {
                 e.preventDefault();
-                planetElement.classList.add('touch-active');
             }
-
-            if (planetElement.parentElement.classList.contains('planets-container')) {
-                // Start degree adjustment
-                isChangingDegree = true;
-                degreeChangePlanet = planetElement;
-                initialMouseY = e.touches[0].clientY;
-                initialPlanetDegree = planetDegrees[planetElement.id]?.degree || 0;
+            
+            // Handle planet touch
+            if (planetElement) {
+                planetElement.classList.add('touch-highlight');
                 
-                // Show tooltip immediately for touch devices
-                showPlanetTooltip(planetElement);
-            } else if (planetElement.parentElement.id === 'planet-bank') {
-                // Start drag from planet bank
-                draggedPlanetId = planetElement.id;
-                planetElement.style.opacity = '0.5';
-                hideAllTooltipsAndPanels();
+                if (planetElement.parentElement.classList.contains('planets-container')) {
+                    // Start degree adjustment for planets in chart
+                    isChangingDegree = true;
+                    degreeChangePlanet = planetElement;
+                    initialTouchY = touch.clientY;
+                    initialPlanetDegree = planetDegrees[planetElement.id]?.degree || 0;
+                    
+                    // Show tooltip immediately for touch devices
+                    showPlanetTooltip(planetElement);
+                    
+                    // Set up long press to remove planet
+                    longPressTimer = setTimeout(() => {
+                        removePlanetFromChart(planetElement);
+                    }, 600);
+                } else if (planetElement.parentElement.id === 'planet-bank') {
+                    // Start drag from planet bank
+                    draggedPlanetId = planetElement.id;
+                    planetElement.style.opacity = '0.5';
+                    hideAllTooltipsAndPanels();
+                }
+            }
+            
+            // Handle sign label touch
+            if (targetElement.closest('.sign-label')) {
+                const signLabel = targetElement.closest('.sign-label');
+                showSignTooltip({ target: signLabel });
             }
         }
 
         function handleTouchMove(e) {
+            const touch = e.touches[0];
+            const deltaX = Math.abs(touch.clientX - touchStartX);
+            const deltaY = Math.abs(touch.clientY - touchStartY);
+            
+            // Cancel long press if user moved significantly
+            if (longPressTimer && (deltaX > 10 || deltaY > 10)) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
+            }
+            
             if (!isChangingDegree || !degreeChangePlanet) return;
             
             e.preventDefault(); // Prevent scrolling while adjusting degree
             
-            const touch = e.touches[0];
-            const deltaY = initialMouseY - touch.clientY;
-            const degreeChange = deltaY / 20;
+            const deltaYMove = initialTouchY - touch.clientY;
+            const degreeChange = deltaYMove / 20;
             let newDegree = initialPlanetDegree + degreeChange;
             newDegree = Math.max(0, Math.min(29.99, newDegree));
 
@@ -1290,12 +1389,36 @@
         }
 
         function handleTouchEnd(e) {
-            const planetElement = e.target.closest('.planet');
-            if (planetElement) {
-                planetElement.classList.remove('touch-active');
-                planetElement.style.opacity = '1';
+            const touch = e.changedTouches[0];
+            const targetElement = document.elementFromPoint(touch.clientX, touch.clientY);
+            const planetElement = targetElement ? targetElement.closest('.planet') : null;
+            
+            // Clear long press timer
+            if (longPressTimer) {
+                clearTimeout(longPressTimer);
+                longPressTimer = null;
             }
-
+            
+            // Handle single tap on planet (show retrograde panel)
+            if (planetElement && !isDragging) {
+                const touchDuration = Date.now() - touchStartTime;
+                const deltaX = Math.abs(touch.clientX - touchStartX);
+                const deltaY = Math.abs(touch.clientY - touchStartY);
+                
+                // If it was a short tap with minimal movement
+                if (touchDuration < 300 && deltaX < 10 && deltaY < 10) {
+                    if (planetElement.parentElement.classList.contains('planets-container')) {
+                        handlePlanetClick({ target: planetElement, stopPropagation: () => {} });
+                    }
+                }
+            }
+            
+            // Remove highlight from all planets
+            document.querySelectorAll('.planet').forEach(p => {
+                p.classList.remove('touch-highlight');
+                p.style.opacity = '1';
+            });
+            
             if (isChangingDegree) {
                 isChangingDegree = false;
                 degreeChangePlanet = null;
@@ -1303,7 +1426,6 @@
             
             // Handle drop for touch devices
             if (draggedPlanetId) {
-                const touch = e.changedTouches[0];
                 const elementAtTouch = document.elementFromPoint(touch.clientX, touch.clientY);
                 
                 if (elementAtTouch) {
@@ -1329,11 +1451,13 @@
                 }
                 draggedPlanetId = null;
             }
+            
+            isDragging = false;
         }
 
         function handleDegreeChangeMouseMove(e) {
             if (!isChangingDegree || !degreeChangePlanet) return;
-            const deltaY = initialMouseY - e.clientY;
+            const deltaY = initialTouchY - e.clientY;
             const degreeChange = deltaY / 20;
             let newDegree = initialPlanetDegree + degreeChange;
             newDegree = Math.max(0, Math.min(29.99, newDegree));
@@ -1357,20 +1481,24 @@
             const planetToRemove = e.target.closest('.planet');
             if (!planetToRemove) return;
 
-            const currentContainer = planetToRemove.parentElement;
+            removePlanetFromChart(planetToRemove);
+        }
+        
+        function removePlanetFromChart(planetElement) {
+            const currentContainer = planetElement.parentElement;
 
             if (currentContainer && currentContainer.classList.contains('planets-container')) {
-                currentContainer.removeChild(planetToRemove);
-                document.getElementById('planet-bank').appendChild(planetToRemove);
+                currentContainer.removeChild(planetElement);
+                document.getElementById('planet-bank').appendChild(planetElement);
 
-                if (planetToRemove.id === 'Lagna') {
+                if (planetElement.id === 'Lagna') {
                     lagnaSign = null;
                     updateHouseNumbers();
                 }
 
-                delete planetDegrees[planetToRemove.id];
-                updatePlanetDegreeDisplay(planetToRemove);
-                updateRetrogradeSymbol(planetToRemove);
+                delete planetDegrees[planetElement.id];
+                updatePlanetDegreeDisplay(planetElement);
+                updateRetrogradeSymbol(planetElement);
                 hideAllTooltipsAndPanels();
             }
         }
@@ -1388,6 +1516,20 @@
                 if (!relatedTarget || (!relatedTarget.closest('.planet') && !relatedTarget.closest('#planet-tooltip') && !relatedTarget.closest('#retrograde-panel'))) {
                     hidePlanetTooltip();
                 }
+            }
+        }
+        
+        function handleSignLabelTouch(e) {
+            if (isTouchDevice) {
+                const signLabel = e.target.closest('.sign-label');
+                showSignTooltip({ target: signLabel });
+                
+                // Keep tooltip visible for a while on touch devices
+                setTimeout(() => {
+                    if (!document.querySelector('.sign-label:hover')) {
+                        hideSignTooltip();
+                    }
+                }, 3000);
             }
         }
 
@@ -1430,6 +1572,15 @@
             planetTooltip.innerHTML = tooltipContent;
             updateTooltipPosition(planetElement, planetTooltip);
             planetTooltip.classList.add('active');
+            
+            // Auto-hide tooltip on touch devices after 4 seconds
+            if (isTouchDevice) {
+                setTimeout(() => {
+                    if (planetTooltip.classList.contains('active')) {
+                        hidePlanetTooltip();
+                    }
+                }, 4000);
+            }
         }
 
         function updateTooltipPosition(targetElement, tooltipElement) {
@@ -1511,6 +1662,15 @@
             signTooltip.innerHTML = tooltipContent;
             updateTooltipPosition(signLabel, signTooltip);
             signTooltip.classList.add('active');
+            
+            // Auto-hide tooltip on touch devices after 4 seconds
+            if (isTouchDevice) {
+                setTimeout(() => {
+                    if (signTooltip.classList.contains('active')) {
+                        hideSignTooltip();
+                    }
+                }, 4000);
+            }
         }
 
         function hideSignTooltip() {
@@ -1520,7 +1680,7 @@
         function handlePlanetClick(e) {
             const clickedPlanet = e.target.closest('.planet');
             if (clickedPlanet && clickedPlanet.parentElement.classList.contains('planets-container') && planetDegrees[clickedPlanet.id]) {
-                e.stopPropagation();
+                if (e.stopPropagation) e.stopPropagation();
 
                 hideAllTooltipsAndPanels();
 
@@ -1532,17 +1692,26 @@
                 retrogradeCheckbox.checked = planetData.isRetrograde;
 
                 const rect = clickedPlanet.getBoundingClientRect();
-                retrogradePanel.style.left = `${rect.right + 10}px`;
-                retrogradePanel.style.top = `${rect.top}px`;
+                
+                // Center the panel on mobile devices
+                if (isTouchDevice) {
+                    retrogradePanel.style.left = '50%';
+                    retrogradePanel.style.top = '50%';
+                    retrogradePanel.style.transform = 'translate(-50%, -50%)';
+                } else {
+                    retrogradePanel.style.left = `${rect.right + 10}px`;
+                    retrogradePanel.style.top = `${rect.top}px`;
+                    retrogradePanel.style.transform = 'none';
 
-                if (parseFloat(retrogradePanel.style.left) + retrogradePanel.offsetWidth > window.innerWidth) {
-                    retrogradePanel.style.left = `${rect.left - retrogradePanel.offsetWidth - 10}px`;
-                }
-                if (parseFloat(retrogradePanel.style.top) < 0) {
-                    retrogradePanel.style.top = `5px`;
-                }
-                if (parseFloat(retrogradePanel.style.top) + retrogradePanel.offsetHeight > window.innerHeight) {
-                    retrogradePanel.style.top = `${window.innerHeight - retrogradePanel.offsetHeight - 5}px`;
+                    if (parseFloat(retrogradePanel.style.left) + retrogradePanel.offsetWidth > window.innerWidth) {
+                        retrogradePanel.style.left = `${rect.left - retrogradePanel.offsetWidth - 10}px`;
+                    }
+                    if (parseFloat(retrogradePanel.style.top) < 0) {
+                        retrogradePanel.style.top = `5px`;
+                    }
+                    if (parseFloat(retrogradePanel.style.top) + retrogradePanel.offsetHeight > window.innerHeight) {
+                        retrogradePanel.style.top = `${window.innerHeight - retrogradePanel.offsetHeight - 5}px`;
+                    }
                 }
 
                 retrogradePanel.classList.add('active');
