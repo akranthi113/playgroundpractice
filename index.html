@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +20,6 @@
             --highlight-color: #ffcc80;
             --tooltip-bg: #333;
             --panel-bg: #2a2a2a;
-            --success-color: #81c784;
             --shadow: 0 4px 12px rgba(0,0,0,0.5);
             --transition: all 0.3s ease;
         }
@@ -323,17 +323,6 @@
             color: var(--dark-bg);
         }
 
-        button.success {
-            border-color: var(--success-color);
-            color: var(--success-color);
-            background-color: rgba(129, 199, 132, 0.1);
-        }
-
-        button.success:hover {
-            background-color: var(--success-color);
-            color: var(--dark-bg);
-        }
-
         #planet-bank {
             border: 1px dashed var(--light-border);
             padding: 10px;
@@ -467,52 +456,6 @@
             justify-content: center;
             gap: 8px;
             margin-top: 10px;
-        }
-
-        /* Prompt Generation Styles */
-        #prompt-container {
-            display: none;
-            margin-top: 20px;
-            width: 100%;
-        }
-
-        #prompt-container.active {
-            display: block;
-        }
-
-        #ai-prompt {
-            width: 100%;
-            height: 200px;
-            background-color: var(--darker-bg);
-            color: var(--text-color);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 15px;
-            font-family: monospace;
-            font-size: 0.9em;
-            line-height: 1.5;
-            resize: vertical;
-            margin-bottom: 10px;
-        }
-
-        #copy-prompt-btn {
-            display: block;
-            width: 100%;
-            padding: 10px;
-            font-size: 1em;
-        }
-
-        .copy-feedback {
-            color: var(--success-color);
-            text-align: center;
-            margin-top: 8px;
-            font-size: 0.9em;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-        }
-
-        .copy-feedback.show {
-            opacity: 1;
         }
 
         /* Touch area padding for better mobile interaction */
@@ -709,7 +652,6 @@
                             <button id="toggle-signs-btn" onclick="toggleSigns()"><i class="fas fa-eye"></i> Hide Signs</button>
                             <button id="toggle-numbers-btn" onclick="toggleHouseNumbers()"><i class="fas fa-hashtag"></i> Hide Numbers</button>
                             <button id="clear-chart-btn" onclick="resetChart()"><i class="fas fa-trash-alt"></i> Clear Chart</button>
-                            <button id="generate-prompt-btn" onclick="generateAIPrompt()" class="success"><i class="fas fa-robot"></i> Generate AI Prompt</button>
                         </div>
                     </div>
 
@@ -717,12 +659,6 @@
                         <p id="degree-tip-text" class="controls-tip">
                             <i class="fas fa-info-circle"></i> Click and drag a planet in the chart up or down to adjust its degree.
                         </p>
-                    </div>
-
-                    <div id="prompt-container">
-                        <textarea id="ai-prompt" readonly placeholder="Generate a prompt to see the chart analysis text here..."></textarea>
-                        <button id="copy-prompt-btn" class="success"><i class="fas fa-copy"></i> Copy to Clipboard</button>
-                        <div class="copy-feedback" id="copy-feedback">Copied to clipboard!</div>
                     </div>
                 </div>
             </div>
@@ -834,9 +770,6 @@
                 dragLagnaTip: "Place Lagna in a chart box to define houses and see house keywords.",
                 clearChart: "Clear Chart",
                 degreeTip: "Click and drag a planet in the chart up or down to adjust its degree.",
-                generatePrompt: "Generate AI Prompt",
-                copyPrompt: "Copy to Clipboard",
-                copied: "Copied to clipboard!",
                 planet: "Planet",
                 nakshatra: "Nakshatra",
                 pada: "Pada",
@@ -913,10 +846,7 @@
                 dragPlanetsTip: "గ్రహాల ప్లేస్మెంట్",
                 dragLagnaTip: "ఇళ్లని నిర్వచించడానికి మరియు ఇంటి కీవర్డ్స్ చూడటానికి లగ్నాని ఒక చార్ట్ బాక్స్‌లో ఉంచండి.",
                 clearChart: "చార్ట్ క్లియర్ చేయండి",
-                degreeTip: "చార్ట్‌లోని గ్రహంపై క్లిక్ చేసి పైకి లేదా క్రిందికి लागడం ద్వారా దాని డిగ్రీని సర్దుబాటు చేయండి.",
-                generatePrompt: "AI ప్రాంప్ట్ జనరేట్ చేయండి",
-                copyPrompt: "క్లిప్బోర్డ్కు కాపీ చేయండి",
-                copied: "క్లిప్బోర్డ్కు కాపీ చేయబడింది!",
+                degreeTip: "చార్ట్‌లోని గ్రహంపై క్లిక్ చేసి పైకి లేదా క్రిందికి లాగడం ద్వారా దాని డిగ్రీని సర్దుబాటు చేయండి.",
                 planet: "గ్రహం",
                 nakshatra: "నక్షత్రం",
                 pada: "పాద",
@@ -932,16 +862,16 @@
 
                 hideSigns: "రాశులను దాచండి",
                 showSigns: "రాశులను చూపించు",
-                hideNumbers: "నంబర్‌లను దాచండი",
+                hideNumbers: "నంబర్‌లను దాచండి",
                 showNumbers: "నంబర్‌లను చూపించు",
 
                 houseLordship: "ఇంటి ఆధిపత్యం",
                 placementAnalysis: "స్థాన విశ్లేషణ",
 
                 signs: {
-                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "మిథునం", Cancer: "కర్కాటకం", Leo: "సింహம்", Virgo: "కన్య",
+                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "మిథునం", Cancer: "కర్కాటకం", Leo: "సింహం", Virgo: "కన్య",
                     Libra: "తుల", Scorpio: "వృశ్చికం", Sagittarius: "ధనుస్సు", Capricorn: "మకరం",
-                    Aquarius: "కుంభ  ", Pisces: "మీనం"
+                    Aquarius: "కుంభం", Pisces: "మీనం"
                 },
                 signShort: {
                     Aries: "మే", Taurus: "వృ", Gemini: "మి", Cancer: "క", Leo: "సిం", Virgo: "కన్య",
@@ -950,7 +880,7 @@
                 },
                 planets: {
                     Lagna: "లగ్న", Sun: "సూర్యుడు", Moon: "చంద్రుడు", Mars: "కుజుడు", Mercury: "బుధుడు",
-                    Jupiter: "గురుడు", Venus: "శుక్రుడ  ", Saturn: "శని", Rahu: "రాహువు", Ketu: "కేతువు"
+                    Jupiter: "గురుడు", Venus: "శుక్రుడు", Saturn: "శని", Rahu: "రాహువు", Ketu: "కేతువు"
                 },
                 houseNames: {
                     1: "1వ ఇల్లు (లగ్న)", 2: "2వ ఇల్లు", 3: "3వ ఇల్లు", 4: "4వ ఇల్లు", 5: "5వ ఇల్లు",
@@ -972,7 +902,7 @@
                     12: "నష్టాలు, ఖర్చులు, మోక్షం, ఆధ్యాత్మికత, విదేశీ భూములు, ఆసుపత్రులు, ఏకాంతం"
                 },
                 signKeywords: {
-                    Aries: "ప్రారంభం, చర్య, శక్తი, స్వతంత్రత, డ్రైవ్",
+                    Aries: "ప్రారంభం, చర్య, శక్తి, స్వతంత్రత, డ్రైవ్",
                     Taurus: "స్థిరత్వం, సంచితం, ఇంద్రియ జ్ఞానం, పట్టుదల, సౌకర్యం",
                     Gemini: "కమ్యూనికేషన్, మేధస్సు, బహుముఖ ప్రజ్ఞ, ఉత్సుకత, ద్వంద్వత్వం",
                     Cancer: "పోషణ, భావోద్వేగం, ఇల్లు, సున్నితత్వం, భద్రత",
@@ -980,8 +910,8 @@
                     Virgo: "సేవ, విశ్లేషణ, ఆరోగ్యం, వివరాలపై శ్రద్ధ, ఆచరణాత్మకత",
                     Libra: "సామరస్యం, సంబంధాలు, న్యాయం, సమతుల్యత, దౌత్యం",
                     Scorpio: "పరివర్తన, గోప్యత, తీవ్రత, పునరుత్పత్తి, రహస్యం",
-                    Sagittarius: "తత్వశాస్త్రం, అన్వేషణ, ఆశావాదం, జ్ఞాన  , ఉన్నత జ్ఞానం",
-                    Capricorn: "క్రమశిక్షణ, ఆశయం, नిర్మాణం, బాధ్యత, కఠినమైన పని",
+                    Sagittarius: "తత్వశాస్త్రం, అన్వేషణ, ఆశావాదం, జ్ఞానం, ఉన్నత జ్ఞానం",
+                    Capricorn: "క్రమశిక్షణ, ఆశయం, నిర్మాణం, బాధ్యత, కఠినమైన పని",
                     Aquarius: "ఆవిష్కరణ, మానవత్వం, విముక్తి, సంఘం, వాస్తవికత",
                     Pisces: "ఊహ, ఆధ్యాత్మికత, కరుణ, సమర్పణ, కలలు"
                 },
@@ -1021,9 +951,6 @@
             } else {
                 setLanguage('en');
             }
-
-            // Add event listener for copy button
-            document.getElementById('copy-prompt-btn').addEventListener('click', copyPromptToClipboard);
         });
 
         function attachDelegatedListeners() {
@@ -1086,9 +1013,6 @@
             document.getElementById('clear-chart-btn').innerHTML = `<i class="fas fa-trash-alt"></i> ${langData.clearChart}`;
             document.getElementById('degree-tip-text').innerHTML = `<i class="fas fa-info-circle"></i> ${langData.degreeTip}`;
             document.getElementById('retrograde-label').textContent = langData.retrograde;
-            document.getElementById('generate-prompt-btn').innerHTML = `<i class="fas fa-robot"></i> ${langData.generatePrompt}`;
-            document.getElementById('copy-prompt-btn').innerHTML = `<i class="fas fa-copy"></i> ${langData.copyPrompt}`;
-            document.getElementById('copy-feedback').textContent = langData.copied;
 
             const toggleSignsBtn = document.getElementById('toggle-signs-btn');
             toggleSignsBtn.innerHTML = `<i class="fas fa-eye"></i> ${areSignsHidden ? langData.showSigns : langData.hideSigns}`;
@@ -1665,9 +1589,6 @@
             toggleSigns(true);
             toggleHouseNumbers(true);
             updateUIForLanguage();
-            
-            // Hide prompt container when resetting chart
-            document.getElementById('prompt-container').classList.remove('active');
         }
 
         function resetAllPlanetDegrees() {
@@ -1737,93 +1658,6 @@
 
             toggleBtn.innerHTML = `<i class="fas fa-hashtag"></i> ${areNumbersHidden ? langData.showNumbers : langData.hideNumbers}`;
         }
-
-        // New functions for AI prompt generation
-        function generateAIPrompt() {
-            const langData = translations[currentLanguage];
-            let promptText = `**Vedic Astrology South Indian Chart Summary:**\n\n`;
-            
-            // Add Lagna information
-            if (lagnaSign) {
-                const lagnaHouseNumber = getHouseNumber(lagnaSign);
-                promptText += `- **${langData.lagna} (Ascendant):** Placed in ${langData.signs[lagnaSign]} in the ${lagnaHouseNumber}${getOrdinalSuffix(lagnaHouseNumber)} house.\n\n`;
-            } else {
-                promptText += `- **${langData.lagna} (Ascendant):** Not placed in the chart.\n\n`;
-            }
-            
-            promptText += `**Planetary Placements:**\n\n`;
-            
-            // Collect all planets that are placed in the chart (not in the bank)
-            const placedPlanets = [];
-            document.querySelectorAll('.planets-container').forEach(container => {
-                Array.from(container.children).forEach(planetEl => {
-                    if (planetDegrees[planetEl.id]) {
-                        placedPlanets.push(planetEl);
-                    }
-                });
-            });
-            
-            // Sort planets in traditional order
-            const planetOrder = ['Sun', 'Moon', 'Mars', 'Mercury', 'Jupiter', 'Venus', 'Saturn', 'Rahu', 'Ketu'];
-            placedPlanets.sort((a, b) => {
-                return planetOrder.indexOf(a.id) - planetOrder.indexOf(b.id);
-            });
-            
-            // Add each planet's information
-            placedPlanets.forEach(planetEl => {
-                const planetData = planetDegrees[planetEl.id];
-                const nakData = getNakshatraAndPada(planetData.sign, planetData.degree);
-                const houseNumber = getHouseNumber(planetData.sign);
-                
-                promptText += `- **${langData.planets[planetEl.id] || planetEl.id}:** In ${langData.signs[planetData.sign]}, ${houseNumber}${getOrdinalSuffix(houseNumber)} house. `;
-                promptText += `${langData.nakshatra}: ${nakData.nakshatra.name}, ${langData.pada} ${nakData.pada}, at ${planetData.degree.toFixed(2)}°`;
-                
-                if (planetData.isRetrograde) {
-                    promptText += ` (${langData.retrograde})`;
-                }
-                
-                promptText += `.\n`;
-            });
-            
-            promptText += `\n**Analysis Request:**\nBased on this chart, please provide a detailed interpretation of the native's personality, career prospects, and key life themes.`;
-            
-            // Display the prompt
-            const promptTextarea = document.getElementById('ai-prompt');
-            promptTextarea.value = promptText;
-            
-            // Show the prompt container
-            document.getElementById('prompt-container').classList.add('active');
-            
-            // Scroll to the prompt area
-            promptTextarea.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-        }
-        
-        function getOrdinalSuffix(num) {
-            if (num > 3 && num < 21) return 'th';
-            switch (num % 10) {
-                case 1: return 'st';
-                case 2: return 'nd';
-                case 3: return 'rd';
-                default: return 'th';
-            }
-        }
-        
-        function copyPromptToClipboard() {
-            const promptTextarea = document.getElementById('ai-prompt');
-            promptTextarea.select();
-            document.execCommand('copy');
-            
-            // Show feedback
-            const feedback = document.getElementById('copy-feedback');
-            feedback.classList.add('show');
-            
-            setTimeout(() => {
-                feedback.classList.remove('show');
-            }, 2000);
-        }
     </script>
-    
-    <!-- Font Awesome for icons -->
-    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </body>
 </html>
