@@ -72,7 +72,7 @@
         .chart-container {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(4, minmax(70px, 1fr));
+            grid-template-rows: repeat(4, minmax(min-content, auto));
             gap: 1px;
             width: 100%;
             aspect-ratio: 1 / 1;
@@ -517,12 +517,14 @@
             z-index: 50;
         }
 
-        /* Touch-friendly planet sizing */
-        .touch-planet {
-            min-width: 54px;
-            min-height: 32px;
-            padding: 6px 8px;
-            margin: 3px;
+        /* Touch-friendly planet sizing - only for touch devices */
+        @media (hover: none) and (pointer: coarse) {
+            .touch-planet {
+                min-width: 54px;
+                min-height: 32px;
+                padding: 6px 8px;
+                margin: 3px;
+            }
         }
 
         /* Long press indicator */
@@ -641,6 +643,14 @@
             
             .planets-container {
                 grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+            }
+            
+            /* Remove touch-planet styles on desktop */
+            .touch-planet {
+                min-width: unset;
+                min-height: unset;
+                padding: 4px 6px;
+                margin: 2px;
             }
         }
 
@@ -826,7 +836,7 @@
             { name: 'Mula', range: '0° – 13°20′ Sagittarius', ruler: 'Ketu', symbol: 'Roots', deity: 'Nirriti', keywords: 'Foundation, Destruction, Rebirth' },
             { name: 'Purva Ashadha', range: '13°20′ – 26°40′ Sagittarius', ruler: 'Venus', symbol: 'Elephant Tusk', deity: 'Apah', keywords: 'Invincibility, Persistence, Purification' },
             { name: 'Uttara Ashadha', range: '26°40′ Sagittarius – 10°00′ Capricorn', ruler: 'Sun', symbol: 'Elephant Tusk', deity: 'Vishvedevas', keywords: 'Universal Victory, Leadership, Dharma' },
-            { name: 'Shravana', range: '10°00′ – 23°20′ Capricorn', ruler: 'Moon', symbol: 'Ear', deity: 'Vishnu', keywords: 'Listening, Learning, Wisdom' },
+            { name: 'Shravana', range: '10°00′ – 23°20′ Capricorn', ruler: 'Moon', symbol: 'Eear', deity: 'Vishnu', keywords: 'Listening, Learning, Wisdom' },
             { name: 'Dhanishta', range: '23°20′ Capricorn – 6°40′ Aquarius', ruler: 'Mars', symbol: 'Drum', deity: 'Vasus', keywords: 'Wealth, Rhythm, Celebration' },
             { name: 'Shatabhisha', range: '6°40′ – 20°00′ Aquarius', ruler: 'Rahu', symbol: 'Empty Circle', deity: 'Varuna', keywords: 'Healing, Mystery, Revelation' },
             { name: 'Purva Bhadrapada', range: '20°00′ Aquarius – 3°20′ Pisces', ruler: 'Jupiter', symbol: 'Front of Funeral Cot', deity: 'Aja Ekapada', keywords: 'Transformation, Spirituality, Fire' },
@@ -995,9 +1005,9 @@
                 houseLordship: "గృహాధిపత్యం",
                 placementAnalysis: "ప్లేస్మెంట్ విశ్లేషణ",
                 signs: {
-                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "మిథునం", Cancer: "కర్కాటకం", Leo: "సింహం", Virgo: "కన్య",
+                    Aries: "మేషం", Taurus: "వృషభం", Gemini: "मिथुनం", Cancer: "కర్కాటకం", Leo: "సింహం", Virgo: "కన్య",
                     Libra: "తులా", Scorpio: "వృశ్చికం", Sagittarius: "ధనుస్సు", Capricorn: "మకరం",
-                    Aquarius: "కుంభం", Pisces: "మీనం"
+                    Aquarius: "కుంభ��", Pisces: "మీనం"
                 },
                 signShort: {
                     Aries: "మే", Taurus: "వృ", Gemini: "మి", Cancer: "క", Leo: "సి", Virgo: "క",
@@ -1005,7 +1015,7 @@
                     Aquarius: "కు", Pisces: "మీ"
                 },
                 planets: {
-                    Lagna: "లగ్నం", Sun: "సూర్యుడు", Moon: "చంద్రుడు", Mars: "అంగారకుడు", Mercury: "బుధుడు",
+                    Lagna: "లగ్నం", Sun: "సూర్యుడు", Moon: "చంద్రుడ��", Mars: "అంగారకుడు", Mercury: "బుధుడు",
                     Jupiter: "గురువు", Venus: "శుక్రుడు", Saturn: "శని", Rahu: "రాహు", Ketu: "కేతు"
                 },
                 houseNames: {
@@ -1017,15 +1027,15 @@
                     1: "స్వయం, వ్యక్తిత్వం, భౌతిక శరీరం, రూపం, ఆరోగ్యం",
                     2: "సంపద, కుటుంబం, వాక్కు, ఆహారం, వనరులు, విలువలు",
                     3: "సహోదరులు, ధైర్యం, కమ్యూనికేషన్, చిన్న ప్రయాణాలు, హాబీలు, నైపుణ్యాలు",
-                    4: "తల్లి, ఇల్లు, భూమి, వాహనాలు, సంతోషం, విద్య, అంతర్గత శాంతి",
+                    4: "తల్లి, ఇల్లు, ���ూమి, వాహనాలు, సంతోషం, విద్య, అంతర్గత శాంతి",
                     5: "పిల్లలు, సృజనాత్మకత, తెలివి, అంచనా, ప్రేమ, పూర్వజన్మ కర్మ, వివేచన",
                     6: "శత్రువులు, అప్పులు, రోగం, సేవ, దైనందిన రూటీన్, లిటిగేషన్, అడ్డంకులు",
                     7: "వివాహం, భాగస్వామ్యాలు, వ్యాపారం, జీవిత భాగస్వామి, పబ్లిక్ ఇమేజ్, లీగల్ వ్యవహారాలు",
-                    8: "దీర్ఘాయువు, పరిశోధన, అద్భుత శాస్త్రం, వారసత్వం, రూపాంతరం, అకస్మాత్తుగా సంఘటనలు, దీర్ఘకాలిక అనారోగ్యం",
+                    8: "దీర్ఘాయువు, పरిశోధన, అద్భుత శాస్త్రం, వారసత్వం, రూపాంతరం, అకస్మాత్తుగా సంఘటనలు, దీర్ఘకాలిక అనారోగ్యం",
                     9: "తండ్రి, గురువు, ధర్మం, అదృష్టం, దీర్ఘ ప్రయాణాలు, ఉన్నత విద్య, ఆధ్యాత్మికత",
                     10: "కెరీర్, స్థాయి, ప్రతిష్ఠ, పబ్లిక్ లైఫ్, విజయాలు, అధికారం",
                     11: "లాభాలు, స్నేహితులు, ఆశలు, కోరికలు, పెద్ద సహోదరులు, కమ్యూనిటీ, ఆకాంక్షలు",
-                    12: "నష్టాలు, ఖర్చులు, మోక్షం, ఆధ్యాత్మికత, విదేశీ భూములు, ఆసుపత్రులు, ఏకాంతం"
+                    12: "నష్టాలు, ఖర్చులు, మోక్షం, ఆధ్యాత్మికత, విదేశీ భూములు, ఆసుపత్రులు, ���కాంతం"
                 },
                 signKeywords: {
                     Aries: "ప్రారంభం, చర్య, శక్తి, స్వాతంత్ర్యం, డ్రైవ్",
@@ -1034,7 +1044,7 @@
                     Cancer: "పోషణ, భావోద్వేగం, ఇల్లు, సున్నితత్వం, భద్రత",
                     Leo: "సృజనాత్మకత, నాయకత్వం, ఆత్మవిశ్వాసం, రాచరికం, స్వీయ-వ్యక్తీకరణ",
                     Virgo: "సేవ, విశ్లేషణ, ఆరోగ్యం, వివరాలపై దృష్టి, ఆచరణాత్మకత",
-                    Libra: "సామరస్యం, సంబంధాలు, న్యాయం, సమతుల్యత, రాయబారం",
+                    Libra: "సామరస్యం, సంబంధాలు, న్యాయం, స���తుల్యత, రాయబారం",
                     Scorpio: "రూపాంతరం, రహస్యం, తీవ్రత, పునరుద్ధరణ, రహస్యం",
                     Sagittarius: "తత్వజ్ఞానం, అన్వేషణ, ఆశావాదం, జ్ఞానం, ఉన్నత జ్ఞానం",
                     Capricorn: "శిక్షణ, మహత్వాకాంక్ష, నిర్మాణం, బాధ్యత, కఠిన పని",
@@ -1072,6 +1082,7 @@
         let isDragging = false;
         let activeTouchId = null;
         let dragVisualTimer = null;
+        let isTouchInteraction = false;
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', () => {
@@ -1098,16 +1109,19 @@
             document.getElementById('mobile-help-btn').addEventListener('click', () => showHelp());
             document.getElementById('language-selector').addEventListener('change', (e) => setLanguage(e.target.value));
             
-            // Initialize all planets with touch-planet class for mobile
-            document.querySelectorAll('.planet').forEach(planet => {
-                planet.classList.add('touch-planet');
-            });
+            // Initialize touch-planet class only for touch devices
+            if (isTouchDevice) {
+                document.querySelectorAll('.planet').forEach(planet => {
+                    planet.classList.add('touch-planet');
+                });
+            }
         });
 
         function setupEventListeners() {
             // Set up event delegation for dynamic elements
             document.addEventListener('mousedown', handleMouseDown);
             document.addEventListener('mouseup', handleMouseUp);
+            document.addEventListener('mousemove', handleMouseMove);
             
             // Touch events
             document.addEventListener('touchstart', handleTouchStart, { passive: false });
@@ -1178,6 +1192,7 @@
         }
 
         function handleMouseDown(e) {
+            isTouchInteraction = false;
             const planetElement = e.target.closest('.planet');
             if (!planetElement) return;
 
@@ -1187,13 +1202,36 @@
                 degreeChangePlanet = planetElement;
                 initialTouchY = e.clientY;
                 initialPlanetDegree = planetDegrees[planetElement.id]?.degree || 0;
-
-                document.addEventListener('mousemove', handleDegreeChangeMouseMove);
                 hideAllTooltipsAndPanels();
             }
         }
 
+        function handleMouseMove(e) {
+            if (!isChangingDegree || !degreeChangePlanet || isTouchInteraction) return;
+            
+            const deltaY = initialTouchY - e.clientY;
+            const degreeChange = deltaY / 30;
+            let newDegree = initialPlanetDegree + degreeChange;
+            newDegree = Math.max(0, Math.min(29.99, newDegree));
+
+            if (Math.abs(newDegree - initialPlanetDegree) > 0.1) {
+                if (planetDegrees[degreeChangePlanet.id]) {
+                    planetDegrees[degreeChangePlanet.id].degree = parseFloat(newDegree.toFixed(2));
+                    updatePlanetDegreeDisplay(degreeChangePlanet);
+                    showPlanetTooltip(degreeChangePlanet);
+                }
+            }
+        }
+
+        function handleMouseUp() {
+            if (isChangingDegree && !isTouchInteraction) {
+                isChangingDegree = false;
+                degreeChangePlanet = null;
+            }
+        }
+
         function handleTouchStart(e) {
+            isTouchInteraction = true;
             // Only process the first touch in a multi-touch scenario
             if (activeTouchId !== null) return;
             
@@ -1279,7 +1317,7 @@
             e.preventDefault(); // Prevent scrolling while adjusting degree
             
             const deltaYMove = initialTouchY - touch.clientY;
-            const degreeChange = deltaYMove / 30; // Less sensitive adjustment (increased from 15 to 30)
+            const degreeChange = deltaYMove / 30;
             let newDegree = initialPlanetDegree + degreeChange;
             newDegree = Math.max(0, Math.min(29.99, newDegree));
 
@@ -1321,8 +1359,8 @@
                 const deltaX = Math.abs(touch.clientX - touchStartX);
                 const deltaY = Math.abs(touch.clientY - touchStartY);
                 
-                // If it was a short tap with minimal movement
-                if (touchDuration < 300 && deltaX < 10 && deltaY < 10) {
+                // If it was a short tap with minimal movement - increased threshold
+                if (touchDuration < 300 && deltaX < 25 && deltaY < 25) {
                     if (planetElement.parentElement.classList.contains('planets-container')) {
                         showRetrogradePanel(planetElement);
                     }
@@ -1370,31 +1408,7 @@
             
             isDragging = false;
             activeTouchId = null;
-        }
-
-        function handleDegreeChangeMouseMove(e) {
-            if (!isChangingDegree || !degreeChangePlanet) return;
-            const deltaY = initialTouchY - e.clientY;
-            const degreeChange = deltaY / 30; // Less sensitive adjustment (increased from 15 to 30)
-            let newDegree = initialPlanetDegree + degreeChange;
-            newDegree = Math.max(0, Math.min(29.99, newDegree));
-
-            // Only update if the change is significant (more than 0.1 degree)
-            if (Math.abs(newDegree - initialPlanetDegree) > 0.1) {
-                if (planetDegrees[degreeChangePlanet.id]) {
-                    planetDegrees[degreeChangePlanet.id].degree = parseFloat(newDegree.toFixed(2));
-                    updatePlanetDegreeDisplay(degreeChangePlanet);
-                    showPlanetTooltip(degreeChangePlanet);
-                }
-            }
-        }
-
-        function handleMouseUp() {
-            if (isChangingDegree) {
-                isChangingDegree = false;
-                degreeChangePlanet = null;
-                document.removeEventListener('mousemove', handleDegreeChangeMouseMove);
-            }
+            isTouchInteraction = false;
         }
         
         function removePlanetFromChart(planetElement) {
@@ -1812,10 +1826,12 @@
             // Hide prompt container when resetting chart
             document.getElementById('prompt-container').classList.remove('active');
             
-            // Re-add touch-planet class to all planets
-            document.querySelectorAll('.planet').forEach(planet => {
-                planet.classList.add('touch-planet');
-            });
+            // Re-add touch-planet class only for touch devices
+            if (isTouchDevice) {
+                document.querySelectorAll('.planet').forEach(planet => {
+                    planet.classList.add('touch-planet');
+                });
+            }
         }
 
         function resetAllPlanetDegrees() {
